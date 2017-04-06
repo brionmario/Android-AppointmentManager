@@ -8,7 +8,7 @@ import android.widget.ProgressBar;
 public class SplashScreen extends AppCompatActivity {
 
 
-    private final int DURATION =1000;
+    private final int DURATION =3000;
     private Thread mSplashThread;
     private ProgressBar progressBar = null;
 

@@ -7,4 +7,7 @@
     <string name="deleteAppointment">Delete Appointment</string>
     <string name="moveAppointment">Move Appointment</string>
     <string name="search">Search</string>
+
+    <!--Create Appointment Screen-->
+    <string name="save">Save</string>
 </resources>
