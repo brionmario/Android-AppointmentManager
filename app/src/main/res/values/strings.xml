@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Appointment Manager</string>
+
+    <!--Home Screen Strings-->
+    <string name="createAppointment">Create Appointment</string>
+    <string name="viewEdit">View/Edit Appointments</string>
+    <string name="deleteAppointment">Delete Appointment</string>
+    <string name="moveAppointment">Move Appointment</string>
+    <string name="search">Search</string>
+</resources>
