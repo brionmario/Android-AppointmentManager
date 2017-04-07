@@ -10,4 +10,11 @@
 
     <!--Create Appointment Screen-->
     <string name="save">Save</string>
+    <string name="createPageTitle">CREATE APPOINTMENT</string>
+    <string name="titleTextView">The title of the appointment</string>
+    <string name="timeTextView">The time of the appointment</string>
+    <string name="detailsTextView">The details of the appointment</string>
+    <string name="titleHint">Enter the title</string>
+    <string name="timeHint">Enter the time</string>
+    <string name="detailsHint">Description</string>
 </resources>

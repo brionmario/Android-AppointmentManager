@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/home_bg"
+    android:background="@color/bgColor"
     tools:context="com.apareciumlabs.brionsilva.madscheduler.CreateAppointmentScreen">
 
     <TextView
@@ -16,82 +16,100 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/createAppointment"
+        android:textSize="24sp"
+        android:shadowColor="@color/Black"
+        android:shadowDx="5"
+        android:shadowDy="5"
+        android:shadowRadius="1"
+        android:text="@string/createPageTitle"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintVertical_bias="0.274" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="395dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="242dp"
+        android:layout_marginBottom="119dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
+        android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
 
-        <EditText
-            android:id="@+id/editText"
+        <TextView
+            android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/titleTextView"
+            android:textAlignment="center" />
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="395dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
             android:ems="10"
-            android:layout_marginBottom="20dp"
-            android:hint="The title of the appointment"
+            android:hint=""
             android:inputType="text"
-            tools:layout_editor_absoluteX="98dp"
+            tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="92dp" />
 
 
-        <EditText
-            android:id="@+id/editText2"
+        <TextView
+            android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/timeTextView"
+            android:textAlignment="center" />
+
+        <EditText
+            android:id="@+id/editText2"
+            android:layout_width="395dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
             android:ems="10"
-            android:layout_marginBottom="20dp"
-            android:hint="The time of the appointment"
+            android:hint=""
             android:inputType="time"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="0dp" />
+
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/detailsTextView"
+            android:textAlignment="center" />
+
+        <EditText
+            android:id="@+id/editText3"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginBottom="30dp"
+            android:ems="10"
+            android:hint=""
+            android:inputType="textMultiLine"
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="0dp" />
 
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" >
-
-                <EditText
-                    android:id="@+id/editText3"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:ems="10"
-                    android:layout_marginBottom="20dp"
-                    android:hint="Details of the appointment"
-                    android:inputType="textMultiLine"
-                    tools:layout_editor_absoluteX="0dp"
-                    tools:layout_editor_absoluteY="0dp" />
-            </LinearLayout>
-        </ScrollView>
-
-
         <Button
             android:id="@+id/saveButton"
-            android:layout_width="395dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
+            android:background="@color/customPurple"
             android:text="@string/save"
             tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="0dp"
-            android:background="@color/customPurple"/>
+            tools:layout_editor_absoluteY="0dp" />
 
     </LinearLayout>
 
