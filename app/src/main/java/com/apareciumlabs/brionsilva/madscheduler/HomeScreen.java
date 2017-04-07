@@ -56,12 +56,12 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         switch (v.getId()) {
             case R.id.createAppointmentButton :{
 
-                //get the date frm the calender view and store it in a variable
-                long date = calendarView.getDate();
 
                 Intent intent = new Intent(getBaseContext() , CreateAppointmentScreen.class);
                 intent.putExtra("Date" , getYear + "/" + getMonth + "/" + getDay);
                 startActivity(intent);
+
+                break;
 
             }
         }

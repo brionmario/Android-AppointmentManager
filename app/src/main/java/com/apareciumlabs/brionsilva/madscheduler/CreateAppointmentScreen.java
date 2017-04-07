@@ -8,37 +8,78 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class CreateAppointmentScreen extends AppCompatActivity {
+public class CreateAppointmentScreen extends AppCompatActivity implements View.OnClickListener {
 
+    EditText titleET, timeET, detailsET;
     Button saveBtn;
-    EditText titleET,timeET, detailsET;
-    DBHandler myDBHandler;
+    MyDBHandler dbHandler;
+
+    private String date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_appointment_screen);
 
-        myDBHandler = new DBHandler(this,null,null,1);
-
-        //Get the extras passed from the previous activity
         Intent intent = getIntent();
-        final String date = intent.getStringExtra("Date");
-        //Toast.makeText(getBaseContext(), date ,Toast.LENGTH_SHORT ).show();
 
+
+        Toast.makeText(getBaseContext() , intent.getStringExtra("Date") , Toast.LENGTH_SHORT).show();
+
+        //initializing the edit text boxes
         titleET = (EditText) findViewById(R.id.titleEditText);
         timeET = (EditText) findViewById(R.id.timeEditText);
         detailsET = (EditText) findViewById(R.id.detailsEditText);
 
         saveBtn = (Button) findViewById(R.id.saveButton);
-        saveBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myDBHandler.createAppointment("5/7/7","4:4","dfdf", "sdksdfhs");
-                //Toast.makeText(getBaseContext(),myDBHandler.printDatabase(),Toast.LENGTH_SHORT).show();
+        saveBtn.setOnClickListener(this);
+
+        /**
+         * create a new database handler. null can be passed because the helper has all the constants
+         * 1 is the database version
+         */
+        dbHandler = new MyDBHandler(this, null, null, 1);
+        //dbHandler.clearDatabase("appointments");
+        printDatabase();
+    }
+
+    /**
+     * This method prints the current database
+     */
+    public void printDatabase(){
+        String dbString = dbHandler.databaseToString();
+        Toast.makeText(getBaseContext() , dbString , Toast.LENGTH_SHORT).show();
+        titleET.setText(""); timeET.setText("");detailsET.setText("");
+    }
+
+    //add your elements onclick methods.
+    //Add a product to the database
+    public void addButtonClicked(View view){
+        // dbHandler.add needs an object parameter.
+
+    }
+
+    //Delete items
+    public void deleteButtonClicked(View view){
+        // dbHandler delete needs string to find in the db
+        String inputText = titleET.getText().toString();
+        dbHandler.deleteProduct(inputText);
+        printDatabase();
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+            case R.id.saveButton : {
+
+                Appointment appointment = new Appointment(date , timeET.getText().toString() ,
+                        titleET.getText().toString() , detailsET.getText().toString());
+                dbHandler.createAppointment(appointment);
+                printDatabase();
+                break;
+
             }
-        });
-
-
+        }
     }
 }

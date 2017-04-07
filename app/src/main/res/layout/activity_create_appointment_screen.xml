@@ -31,7 +31,7 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="300dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="119dp"
         android:layout_marginEnd="8dp"
@@ -78,7 +78,7 @@
             android:layout_marginBottom="30dp"
             android:ems="10"
             android:hint=""
-            android:inputType="time"
+            android:inputType="text"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="0dp" />
 
@@ -108,6 +108,7 @@
             android:layout_height="wrap_content"
             android:background="@color/customPurple"
             android:text="@string/save"
+            android:onClick="addButtonClicked"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="0dp" />
 

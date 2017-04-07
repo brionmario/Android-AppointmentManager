@@ -18,16 +18,14 @@ public class DBHandler extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "MAD_scheduler.db";
-    private static final String TABLE_APPOINTMENTS = "appointments";
+    public static final String TABLE_APPOINTMENTS = "appointments";
 
     //Columns of the appointment table
-    private static final String COLUMN_ID = "id";
-    private static final String COLUMN_DATE = "date";
-    private static final String COLUMN_TIME = "time";
-    private static final String COLUMN_TITLE = "title";
-    private static final String COLUMN_DETAILS = "details";
-
-
+    public static final String COLUMN_ID = "id";
+    public static final String COLUMN_DATE = "date";
+    public static final String COLUMN_TIME = "time";
+    public static final String COLUMN_TITLE = "title";
+    public static final String COLUMN_DETAILS = "details";
 
 
     public DBHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -73,14 +71,9 @@ public class DBHandler extends SQLiteOpenHelper {
      * exists with the same appointment name returns -1 and if not executes the insert query and
      * returns 1.
      *
-     * @param date Date of the appointment
-     * @param time Time of the appointment
-     * @param title Title of the appointment
-     * @param details Details of the appointment
+     * @param appointment Instance of appointment class
      */
-    public void createAppointment(String date , String time , String title , String details){
-
-        SQLiteDatabase db = getWritableDatabase();
+    public void createAppointment(Appointment appointment){
 
         /*String sql = " SELECT * FROM " + TABLE_APPOINTMENTS + " WHERE " + COLUMN_TITLE + " =\" " + title + " \";";
         Cursor cursor = db.rawQuery(sql,null);
@@ -88,12 +81,12 @@ public class DBHandler extends SQLiteOpenHelper {
         if (cursor == null || !cursor.moveToFirst()) {*/
             //Insert new
             ContentValues contentValues = new ContentValues();
-            contentValues.put(COLUMN_DATE , date);
-            contentValues.put(COLUMN_TIME , time);
-            contentValues.put(COLUMN_TIME , title);
-            contentValues.put(COLUMN_DETAILS , details);
+            contentValues.put(COLUMN_DATE , appointment.getDate());
+            contentValues.put(COLUMN_TIME , appointment.getTime());
+            contentValues.put(COLUMN_TIME , appointment.getTitle());
+            contentValues.put(COLUMN_DETAILS , appointment.getDetails());
 
-
+            SQLiteDatabase db = getWritableDatabase();
             db.insert(TABLE_APPOINTMENTS , null , contentValues);
             db.close(); //restores the memory
             /*cursor.close();
@@ -114,21 +107,25 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     public String printDatabase (){
-        String dbtoString = "";
+            String dbString = "";
+            SQLiteDatabase db = getWritableDatabase();
+            String query = "SELECT * FROM " + TABLE_APPOINTMENTS + " WHERE 1";// why not leave out the WHERE  clause?
 
-        SQLiteDatabase db = getWritableDatabase();
-        String query = " SELECT * FROM " + TABLE_APPOINTMENTS + " WHERE 1 " ;
+            //Cursor points to a location in your results
+            Cursor recordSet = db.rawQuery(query, null);
+            //Move to the first row in your results
+            recordSet.moveToFirst();
 
-        Cursor c = db.rawQuery(query , null);
-        c.moveToFirst();
-
-        while (!c.isAfterLast()){
-            if(c.getString(c.getColumnIndex("title"))  !=null ){
-                dbtoString += c.getString(c.getColumnIndex("title"));
-                dbtoString += "\n";
+            //Position after the last row means the end of the results
+            while (!recordSet.isAfterLast()) {
+                // null could happen if we used our empty constructor
+                if (recordSet.getString(recordSet.getColumnIndex("title")) != null) {
+                    dbString += recordSet.getString(recordSet.getColumnIndex("title"));
+                    dbString += "\n";
+                }
+                recordSet.moveToNext();
             }
+            db.close();
+            return dbString;
         }
-        db.close();
-        return dbtoString;
-    }
 }
