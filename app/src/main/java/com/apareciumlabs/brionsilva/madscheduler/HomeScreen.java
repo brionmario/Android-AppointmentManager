@@ -9,11 +9,16 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class HomeScreen extends AppCompatActivity implements View.OnClickListener {
 
     private Button crtAppoBtn,editAppoBtn,delAppoBtn,moveAppoBtn,searchBtn;
     CalendarView calendarView;
     private int getYear,getMonth,getDay;
+
+    private String date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +49,19 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 getYear = year ;
                 getMonth = month;
                 getDay = dayOfMonth ;
+
+                //assign the date variable with the clicked date
+                date = getDay + "/" + getMonth + "/" + getYear ;
                // Toast.makeText(getBaseContext() , year + "/" + month + "/" + dayOfMonth , Toast.LENGTH_SHORT).show();
             }
         });
+
+        //initialize the default date  and assign it to the date variable in case if he user doesn't
+        //click on any date.
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String dateSelected = simpleDateFormat.format(new Date(calendarView.getDate()));
+        date = dateSelected;
+
 
     }
 
@@ -56,9 +71,8 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         switch (v.getId()) {
             case R.id.createAppointmentButton :{
 
-
                 Intent intent = new Intent(getBaseContext() , CreateAppointmentScreen.class);
-                intent.putExtra("Date" , getYear + "/" + getMonth + "/" + getDay);
+                intent.putExtra("Date" , date ); // format - dd/MM/yyyy
                 startActivity(intent);
 
                 break;

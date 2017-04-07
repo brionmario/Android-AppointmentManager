@@ -22,9 +22,8 @@ public class CreateAppointmentScreen extends AppCompatActivity implements View.O
         setContentView(R.layout.activity_create_appointment_screen);
 
         Intent intent = getIntent();
-
-
-        Toast.makeText(getBaseContext() , intent.getStringExtra("Date") , Toast.LENGTH_SHORT).show();
+        date = intent.getStringExtra("Date");
+        Toast.makeText(getBaseContext() , date , Toast.LENGTH_SHORT).show();
 
         //initializing the edit text boxes
         titleET = (EditText) findViewById(R.id.titleEditText);
@@ -39,7 +38,7 @@ public class CreateAppointmentScreen extends AppCompatActivity implements View.O
          * 1 is the database version
          */
         dbHandler = new MyDBHandler(this, null, null, 1);
-        //dbHandler.clearDatabase("appointments");
+        //dbHandler.clearTable("appointments");
         printDatabase();
     }
 
@@ -48,29 +47,16 @@ public class CreateAppointmentScreen extends AppCompatActivity implements View.O
      */
     public void printDatabase(){
         String dbString = dbHandler.databaseToString();
-        Toast.makeText(getBaseContext() , dbString , Toast.LENGTH_SHORT).show();
+        Toast.makeText(getBaseContext() , dbString , Toast.LENGTH_LONG).show();
         titleET.setText(""); timeET.setText("");detailsET.setText("");
     }
 
-    //add your elements onclick methods.
-    //Add a product to the database
-    public void addButtonClicked(View view){
-        // dbHandler.add needs an object parameter.
-
-    }
-
-    //Delete items
-    public void deleteButtonClicked(View view){
-        // dbHandler delete needs string to find in the db
-        String inputText = titleET.getText().toString();
-        dbHandler.deleteProduct(inputText);
-        printDatabase();
-    }
 
     @Override
     public void onClick(View v) {
 
         switch (v.getId()) {
+
             case R.id.saveButton : {
 
                 Appointment appointment = new Appointment(date , timeET.getText().toString() ,

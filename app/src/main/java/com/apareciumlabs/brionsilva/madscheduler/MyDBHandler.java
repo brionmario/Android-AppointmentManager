@@ -85,10 +85,18 @@ public class MyDBHandler extends SQLiteOpenHelper{
      * @param appointment Instance of appointment class
      */
     public void createAppointment(Appointment appointment){
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_TITLE, appointment.getTitle());
+
+        ContentValues contentValues = new ContentValues();
+
+        //stores the values
+        contentValues.put(COLUMN_DATE, appointment.getDate());
+        contentValues.put(COLUMN_TIME, appointment.getTime());
+        contentValues.put(COLUMN_TITLE, appointment.getTitle());
+        contentValues.put(COLUMN_DETAILS, appointment.getDetails());
+
+        //insert the values into the database
         SQLiteDatabase db = getWritableDatabase();
-        db.insert(TABLE_APPOINTMENTS, null, values);
+        db.insert(TABLE_APPOINTMENTS, null, contentValues);
         db.close();
     }
 
@@ -102,34 +110,51 @@ public class MyDBHandler extends SQLiteOpenHelper{
         db.execSQL("DELETE FROM " + TABLE_APPOINTMENTS + " WHERE " + COLUMN_TITLE + "=\"" + title + "\";");
     }
 
-    // this is goint in record_TextView in the Main activity.
+    /**
+     * Goes through the database and returns the result in a string
+     *
+     * @return
+     */
     public String databaseToString(){
+
         String dbString = "";
         SQLiteDatabase db = getWritableDatabase();
         String query = "SELECT * FROM " + TABLE_APPOINTMENTS + " WHERE 1 "; // 1 means every condition is met
 
-        //Cursor points to a location in your results
-        Cursor recordSet = db.rawQuery(query, null);
-        //Move to the first row in your results
-        recordSet.moveToFirst();
+        //Cursor exposes results from a query on a SQLiteDatabase
+        Cursor cursor = db.rawQuery(query, null);
+        //move the cursor to the first row of the results
+        cursor.moveToFirst();
 
-        //Position after the last row means the end of the results
-        while (!recordSet.isAfterLast()) {
-            // null could happen if we used our empty constructor
-            if (recordSet.getString(recordSet.getColumnIndex("title")) != null) {
-                dbString += recordSet.getString(recordSet.getColumnIndex("title"));
+        //See if there are anymore results
+        while (!cursor.isAfterLast()) {
+
+            if (cursor.getString(cursor.getColumnIndex("title")) != null) {
+                dbString += cursor.getString(cursor.getColumnIndex("date"));
+                dbString += "~";
+                dbString += cursor.getString(cursor.getColumnIndex("time"));
+                dbString += "~";
+                dbString += cursor.getString(cursor.getColumnIndex("title"));
+                dbString += "~";
+                dbString += cursor.getString(cursor.getColumnIndex("details"));
                 dbString += "\n";
             }
-            recordSet.moveToNext();
+            cursor.moveToNext();
         }
         db.close();
         return dbString;
     }
 
-    public void clearDatabase(String TABLE_NAME) {
+    /**
+     * Deletes the content in a table when the name of the table is passed
+     * @param TABLE_NAME Name of the table
+     */
+    public void clearTable(String TABLE_NAME) {
+
         SQLiteDatabase db = getWritableDatabase();
         String clearDBQuery = "DELETE FROM "+TABLE_NAME;
         db.execSQL(clearDBQuery);
+
     }
 }
 
