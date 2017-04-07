@@ -15,6 +15,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 public class MyDBHandler extends SQLiteOpenHelper{
 
@@ -84,20 +85,38 @@ public class MyDBHandler extends SQLiteOpenHelper{
      *
      * @param appointment Instance of appointment class
      */
-    public void createAppointment(Appointment appointment){
+    public int createAppointment(Appointment appointment){
 
-        ContentValues contentValues = new ContentValues();
-
-        //stores the values
-        contentValues.put(COLUMN_DATE, appointment.getDate());
-        contentValues.put(COLUMN_TIME, appointment.getTime());
-        contentValues.put(COLUMN_TITLE, appointment.getTitle());
-        contentValues.put(COLUMN_DETAILS, appointment.getDetails());
-
-        //insert the values into the database
         SQLiteDatabase db = getWritableDatabase();
-        db.insert(TABLE_APPOINTMENTS, null, contentValues);
-        db.close();
+
+        String sql = " SELECT * FROM " + TABLE_APPOINTMENTS + " WHERE "
+                + COLUMN_DATE + "=\'" + appointment.getDate() + "\'" + " AND " + COLUMN_TITLE
+                + "=\'" + appointment.getTitle() + "\';";
+
+        Cursor cursor = db.rawQuery(sql,null);
+
+        if (cursor == null || !cursor.moveToFirst()) {
+
+            ContentValues contentValues = new ContentValues();
+
+            //stores the values
+            contentValues.put(COLUMN_DATE , appointment.getDate());
+            contentValues.put(COLUMN_TIME , appointment.getTime());
+            contentValues.put(COLUMN_TITLE , appointment.getTitle());
+            contentValues.put(COLUMN_DETAILS , appointment.getDetails());
+
+
+            //insert the values into the database
+            db.insert(TABLE_APPOINTMENTS , null , contentValues);
+            db.close(); //restores the memory
+            cursor.close();
+            return 1;
+
+        } else {
+
+            return -1;
+
+        }
     }
 
     /**

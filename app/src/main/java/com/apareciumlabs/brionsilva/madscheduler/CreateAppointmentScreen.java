@@ -61,7 +61,13 @@ public class CreateAppointmentScreen extends AppCompatActivity implements View.O
 
                 Appointment appointment = new Appointment(date , timeET.getText().toString() ,
                         titleET.getText().toString() , detailsET.getText().toString());
-                dbHandler.createAppointment(appointment);
+                int i = dbHandler.createAppointment(appointment);
+
+                if(i == 1){
+                    Toast.makeText(getBaseContext() , "Done" , Toast.LENGTH_LONG).show();
+                }else if (i == -1){
+                    Toast.makeText(getBaseContext() , "Error" , Toast.LENGTH_LONG).show();
+                }
                 printDatabase();
                 break;
 
