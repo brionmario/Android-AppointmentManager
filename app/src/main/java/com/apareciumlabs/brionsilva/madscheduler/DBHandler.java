@@ -42,11 +42,11 @@ public class DBHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        String query = "CREATE TABLE" + TABLE_APPOINTMENTS + "(" +
+        String query = " CREATE TABLE " + TABLE_APPOINTMENTS + "(" +
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT " +
                 COLUMN_DATE + " TEXT " +
                 COLUMN_TIME + " TEXT " +
-                COLUMN_TITLE + " TEXT unique" +
+                COLUMN_TITLE + " TEXT " +
                 COLUMN_DETAILS + " TEXT " +
                 ");";
 
@@ -64,7 +64,7 @@ public class DBHandler extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-        db.execSQL("DROP TABLE IF EXISTS" + TABLE_APPOINTMENTS);
+        db.execSQL(" DROP TABLE IF EXISTS " + TABLE_APPOINTMENTS);
         onCreate(db);
     }
 
@@ -78,14 +78,14 @@ public class DBHandler extends SQLiteOpenHelper {
      * @param title Title of the appointment
      * @param details Details of the appointment
      */
-    public int createAppointment(String date , String time , String title , String details){
+    public void createAppointment(String date , String time , String title , String details){
 
         SQLiteDatabase db = getWritableDatabase();
 
-        String sql = "SELECT * FROM " + TABLE_APPOINTMENTS + " WHERE " + COLUMN_TITLE + "=" + title;
+        /*String sql = " SELECT * FROM " + TABLE_APPOINTMENTS + " WHERE " + COLUMN_TITLE + " =\" " + title + " \";";
         Cursor cursor = db.rawQuery(sql,null);
 
-        if (cursor == null || !cursor.moveToFirst()) {
+        if (cursor == null || !cursor.moveToFirst()) {*/
             //Insert new
             ContentValues contentValues = new ContentValues();
             contentValues.put(COLUMN_DATE , date);
@@ -96,7 +96,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
             db.insert(TABLE_APPOINTMENTS , null , contentValues);
             db.close(); //restores the memory
-            cursor.close();
+            /*cursor.close();
 
         } else {
 
@@ -104,6 +104,31 @@ public class DBHandler extends SQLiteOpenHelper {
 
         }
         cursor.close();
-        return 0;
+        return 0;*/
+    }
+
+    public void deleteAppointment(String title){
+
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM " + TABLE_APPOINTMENTS + " WHERE " + COLUMN_TITLE + " =\" " + title + "\";");
+    }
+
+    public String printDatabase (){
+        String dbtoString = "";
+
+        SQLiteDatabase db = getWritableDatabase();
+        String query = " SELECT * FROM " + TABLE_APPOINTMENTS + " WHERE 1 " ;
+
+        Cursor c = db.rawQuery(query , null);
+        c.moveToFirst();
+
+        while (!c.isAfterLast()){
+            if(c.getString(c.getColumnIndex("title"))  !=null ){
+                dbtoString += c.getString(c.getColumnIndex("title"));
+                dbtoString += "\n";
+            }
+        }
+        db.close();
+        return dbtoString;
     }
 }
