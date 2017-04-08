@@ -17,4 +17,10 @@
     <string name="titleHint">Enter the title</string>
     <string name="timeHint">Enter the time</string>
     <string name="detailsHint">Description</string>
+
+    <!--delete appointment popup-->
+    <string name="option">Please select an option from bellow \n\n 1. Delete all appointments for that date \n
+    \n 2. Select appointment to delete \n\n </string>
+    <string name="deleteAll">Delete All</string>
+    <string name="selectToDelete">Select to delete</string>
 </resources>

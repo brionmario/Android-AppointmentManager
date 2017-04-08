@@ -1,12 +1,17 @@
 package com.apareciumlabs.brionsilva.madscheduler;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -15,10 +20,12 @@ import java.util.Date;
 public class HomeScreen extends AppCompatActivity implements View.OnClickListener {
 
     private Button crtAppoBtn,editAppoBtn,delAppoBtn,moveAppoBtn,searchBtn;
+    Button deleteAllBtn , selectDeleteBtn;
     CalendarView calendarView;
     private int getYear,getMonth,getDay;
 
     private String date;
+    PopupWindow popupWindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +85,43 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 break;
 
             }
+            case R.id.deleteAppointmentButton : {
+                deleteAppointmentPopup(v);
+                break;
+            }
         }
 
+    }
+
+    /**
+     * This junction creates just a simple popup window that has two buttons
+     *
+     * @param v The current view instance is passed
+     */
+    private void deleteAppointmentPopup (View v) {
+        try {
+            //get an instance of layoutinflater
+            LayoutInflater inflater = (LayoutInflater) HomeScreen.this
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            //initiate the view
+            View layout = inflater.inflate(R.layout.popup,
+                    (ViewGroup) findViewById(R.id.popupView));
+
+            //initialize a size for the popup
+            popupWindow = new PopupWindow(layout, 1200, 900 ,  true);
+            // display the popup in the center
+            popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
+
+            deleteAllBtn = (Button) layout.findViewById(R.id.delAllButton);
+            deleteAllBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    popupWindow.dismiss();
+                }
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

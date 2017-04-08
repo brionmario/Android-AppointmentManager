@@ -8,4 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!--Make the dialog box white-->
+    <style name="BrionDialogTheme" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:background">@color/customPurple</item>
+    </style>
 </resources>

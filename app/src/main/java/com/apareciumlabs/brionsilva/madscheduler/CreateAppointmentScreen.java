@@ -1,8 +1,11 @@
 package com.apareciumlabs.brionsilva.madscheduler;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -59,19 +62,66 @@ public class CreateAppointmentScreen extends AppCompatActivity implements View.O
 
             case R.id.saveButton : {
 
-                Appointment appointment = new Appointment(date , timeET.getText().toString() ,
-                        titleET.getText().toString() , detailsET.getText().toString());
-                int i = dbHandler.createAppointment(appointment);
+                String time = timeET.getText().toString();
+                String title = titleET.getText().toString();
+                String details = detailsET.getText().toString();
 
-                if(i == 1){
-                    Toast.makeText(getBaseContext() , "Done" , Toast.LENGTH_LONG).show();
-                }else if (i == -1){
-                    Toast.makeText(getBaseContext() , "Error" , Toast.LENGTH_LONG).show();
+                if (TextUtils.isEmpty(time)){
+
+                    timeET.setError("Please set a time for the appointment.");
+                    return;
+
+                }else if (TextUtils.isEmpty(title)) {
+
+                    titleET.setError("Please set a title for the appointment.");
+                    return;
+
+                }else if(TextUtils.isEmpty(details)) {
+
+                    detailsET.setError("Please set a details for the appointment.");
+                    return;
+
+                }else {
+
+                    Appointment appointment = new Appointment(date, time, title, details);
+                    int i = dbHandler.createAppointment(appointment);
+                    if (i == 1) {
+
+                        errorDialog("Appointment " + title + " on " + date + " was created successfully.");
+                        printDatabase();
+
+                    } else if (i == -1) {
+
+                        errorDialog("Appointment "+ title +" already exists, please choose a different event title");
+                    }
+
+
                 }
-                printDatabase();
                 break;
 
             }
         }
+    }
+
+    /**
+     * This function creates a dialog box which takes
+     * @param error String parameter which is passed
+     */
+    public void errorDialog(String error)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this , R.style.BrionDialogTheme);
+        builder.setMessage(error);
+        builder.setCancelable(true);
+
+        builder.setPositiveButton(
+                "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }
