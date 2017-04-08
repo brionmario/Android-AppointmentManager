@@ -18,7 +18,7 @@
         </activity>
         <activity android:name=".HomeScreen" />
         <activity android:name=".CreateAppointmentScreen" />
-        <activity android:name=".DeleteAppointmentScreen" />
+        <activity android:name=".ChangeAppointmentScreen" />
         <activity android:name=".EditAppointmentScreen"></activity>
     </application>
 

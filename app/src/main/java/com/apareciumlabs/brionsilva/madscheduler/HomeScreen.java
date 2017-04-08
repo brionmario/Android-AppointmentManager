@@ -91,6 +91,20 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 deleteAppointmentPopup(v);
                 break;
             }
+            case R.id.viewEditButton:{
+                Intent intent = new Intent(getBaseContext() , ChangeAppointmentScreen.class);
+                intent.putExtra("Date" , date ); // format - dd/MM/yyyy
+                intent.putExtra("Change Type" , "Edit" );
+                startActivity(intent);
+                break;
+            }
+            case R.id.moveAppointmentButton :{
+                Intent intent = new Intent(getBaseContext() , ChangeAppointmentScreen.class);
+                intent.putExtra("Date" , date ); // format - dd/MM/yyyy
+                intent.putExtra("Change Type" , "Move" );
+                startActivity(intent);
+                break;
+            }
         }
 
     }
@@ -101,6 +115,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
      * @param v The current view instance is passed
      */
     private void deleteAppointmentPopup (View v) {
+
         try {
             //get an instance of layoutinflater
             LayoutInflater inflater = (LayoutInflater) HomeScreen.this
@@ -131,8 +146,9 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 @Override
                 public void onClick(View v) {
 
-                    Intent intent = new Intent(getBaseContext() , DeleteAppointmentScreen.class);
+                    Intent intent = new Intent(getBaseContext() , ChangeAppointmentScreen.class);
                     intent.putExtra("Date" , date ); // format - dd/MM/yyyy
+                    intent.putExtra("Change Type" , "Delete" );
                     startActivity(intent);
                     popupWindow.dismiss();
                 }

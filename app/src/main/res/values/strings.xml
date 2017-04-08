@@ -25,8 +25,13 @@
     <string name="selectToDelete">Select to delete</string>
 
     <!--delete appointment page-->
-    <string name="delAppointmentLabel">DELETE APPOINTMENT</string>
-    <string name="delHelp">Please enter the number of the appointment you wish to delete and press the confirm button.</string>
-    <string name="delHint">No of the appointment</string>
-    <string name="confirm">CONFIRM</string>
+    <string name="changeAppointmentHeading">CHANGE APPOINTMENT HEADING</string>
+    <string name="changeAppointmentHelp">Sub Heading</string>
+    <string name="changeAppointmentHint">Enter the number here</string>
+    <string name="confirm">Button Text</string>
+
+    <!--update popup-->
+    <string name="updateHeading">Please enter the necessary updates in the text boxes bellow.</string>
+    <string name="update">Update</string>
+    <string name="updateAppointment">UPDATE APPOINTMENT</string>
 </resources>
