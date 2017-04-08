@@ -34,4 +34,9 @@
     <string name="updateHeading">Please enter the necessary updates in the text boxes bellow.</string>
     <string name="update">Update</string>
     <string name="updateAppointment">UPDATE APPOINTMENT</string>
+
+    <!--move popup-->
+    <string name="moveHeading">Please select the date you wish to move the appointment</string>
+    <string name="move">move</string>
+    <string name="moveAppointmentHead">MOVE APPOINTMENT</string>
 </resources>

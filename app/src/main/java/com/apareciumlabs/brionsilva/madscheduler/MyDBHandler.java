@@ -121,10 +121,14 @@ public class MyDBHandler extends SQLiteOpenHelper{
     }
 
     /**
-     * Updates an appointment based on the date, time, title and the details. If the up[date is not
+     * This function updates an appointment based on the date, time, title and the details. If the up[date is not
      * successful returns -1 and if successful updates the appointment and return 1
      *
      * @param appointment Instance of appointment class
+     * @param time Time that need to updated
+     * @param title Title that need to updated
+     * @param details Details that need to updated
+     * @return
      */
     public int updateAppointment(Appointment appointment , String time , String title , String details){
 
@@ -160,6 +164,41 @@ public class MyDBHandler extends SQLiteOpenHelper{
         }
     }
 
+    /**
+     * This function Moves an appointment to a different date
+     *
+     * @param appointment Instance of appointment class
+     */
+    public int moveAppointment(Appointment appointment , String date ){
+
+        SQLiteDatabase db = getWritableDatabase();
+
+        String sql = " SELECT * FROM " + TABLE_APPOINTMENTS + " WHERE "
+                + COLUMN_DATE + "=\'" + appointment.getDate() + "\'" + " AND " +
+                COLUMN_TITLE + "=\'" + appointment.getTitle() + "\';";
+
+        Cursor cursor = db.rawQuery(sql,null);
+
+        if (cursor == null || !cursor.moveToFirst()) {
+
+            return -1;
+
+        } else {
+
+            ContentValues contentValues = new ContentValues();
+
+            //stores the values to be updated
+            contentValues.put(COLUMN_DATE , date);
+
+            //insert the values into the database
+            db.update(TABLE_APPOINTMENTS, contentValues , COLUMN_DATE + "='" + appointment.getDate() + "'" + " AND " +
+                    COLUMN_TITLE + "='" + appointment.getTitle() + "'" , null);
+            db.close(); //restores the memory
+            cursor.close();
+            return 1;
+
+        }
+    }
 
     /**
      * Searches and deletes all the appointments on a selected day

@@ -3,6 +3,7 @@ package com.apareciumlabs.brionsilva.madscheduler;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,13 +13,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class ChangeAppointmentScreen extends AppCompatActivity {
@@ -49,6 +53,11 @@ public class ChangeAppointmentScreen extends AppCompatActivity {
     PopupWindow popupWindow;
     Button updateBtn;
     EditText titleET, timeET, detailsET;
+
+    //Move Popup
+    Button moveBtn;
+    CalendarView calendarView;
+    String popupDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,6 +146,7 @@ public class ChangeAppointmentScreen extends AppCompatActivity {
 
                         } else if (changeType.equals("Move")){
 
+                            moveAppointmentPopup(v);
                         }
                         appointmentNumberET.setText("");
                     }catch (IndexOutOfBoundsException e){
@@ -253,6 +263,71 @@ public class ChangeAppointmentScreen extends AppCompatActivity {
                         Toast.makeText(getBaseContext(), "Invalid input. Please try again with a valid number." , Toast.LENGTH_SHORT).show();
                     }
                     timeET.setText(""); titleET.setText(""); detailsET.setText("");
+                    popupWindow.dismiss();
+                }
+            });
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * This junction creates a popup window with a calender view and a button
+     *
+     * @param v The current view instance is passed
+     */
+    private void moveAppointmentPopup (View v) {
+
+        try {
+            //get an instance of layoutinflater
+            LayoutInflater inflater = (LayoutInflater) ChangeAppointmentScreen.this
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            //initiate the view
+            final View layout = inflater.inflate(R.layout.move_popup,
+                    (ViewGroup) findViewById(R.id.movePopupView));
+
+            //initialize a size for the popup
+            popupWindow = new PopupWindow(layout, 1200, 1800 ,  true);
+            // display the popup in the center
+            popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
+
+            calendarView = (CalendarView) layout.findViewById(R.id.calendarViewPopup);
+            calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+                @Override
+                public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                    String dateSelected = simpleDateFormat.format(new GregorianCalendar(year, month, dayOfMonth).getTime());
+                    popupDate = dateSelected;
+                    //Toast.makeText(getBaseContext(),popupDate,Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            //Updates the selected appointment
+            moveBtn = (Button) layout.findViewById(R.id.moveButton);
+            moveBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    try {
+
+                        myDBHandler.moveAppointment(listArr.get(Integer.parseInt(appointmentNumber) - 1) , popupDate);
+
+                        //refreshes the page
+                        finish();
+                        startActivity(getIntent());
+
+                    }catch (IndexOutOfBoundsException e){
+
+                        Toast.makeText(getBaseContext(), "Couldn't find the specified appointment in the database." , Toast.LENGTH_SHORT).show();
+
+                    }catch (Exception e){
+
+                        Toast.makeText(getBaseContext(), "Invalid input. Please try again with a valid number." , Toast.LENGTH_SHORT).show();
+                    }
                     popupWindow.dismiss();
                 }
             });
