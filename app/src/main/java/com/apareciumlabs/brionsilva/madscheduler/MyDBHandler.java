@@ -15,7 +15,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.ListView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MyDBHandler extends SQLiteOpenHelper{
 
@@ -55,7 +59,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
         String query = " CREATE TABLE " + TABLE_APPOINTMENTS + "(" +
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT ," +
                 COLUMN_DATE + " TEXT ," +
-                COLUMN_TIME + " TEXT ," +
+                COLUMN_TIME + " DATETIME ," +
                 COLUMN_TITLE + " TEXT ," +
                 COLUMN_DETAILS + " TEXT " +
                 ");";
@@ -131,7 +135,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
     }
 
     /**
-     * Goes through the database and returns the result in a string
+     * Goes through the database and returns the result in a string (Entire Database)
      *
      * @return
      */
@@ -165,6 +169,42 @@ public class MyDBHandler extends SQLiteOpenHelper{
         return dbString;
     }
 
+
+    /**
+     * Goes through the database and returns the result for a single day
+     *
+     * @return
+     */
+
+    public List<Appointment> dailyAppointments(String date){
+
+        List<Appointment> list = new ArrayList<>();
+
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_APPOINTMENTS + " WHERE " + COLUMN_DATE + "=\'" + date + "\'"
+                + " ORDER BY " + COLUMN_TIME + " ASC";
+
+        //Cursor exposes results from a query on a SQLiteDatabase
+        Cursor cursor = db.rawQuery(query, null);
+        //move the cursor to the first row of the results
+        cursor.moveToFirst();
+
+        //See if there are anymore results
+        while (!cursor.isAfterLast()) {
+
+            if (cursor.getString(cursor.getColumnIndex("title")) != null) {
+
+                Appointment appointment = new Appointment(cursor.getString(cursor.getColumnIndex("date")) ,
+                        cursor.getString(cursor.getColumnIndex("time")) ,
+                        cursor.getString(cursor.getColumnIndex("title")) ,
+                        cursor.getString(cursor.getColumnIndex("details")) );
+                list.add(appointment);
+            }
+            cursor.moveToNext();
+        }
+        db.close();
+        return list;
+    }
     /**
      * Deletes the content in a table when the name of the table is passed
      * @param TABLE_NAME Name of the table

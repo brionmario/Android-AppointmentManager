@@ -23,4 +23,10 @@
     \n 2. Select appointment to delete \n\n </string>
     <string name="deleteAll">Delete All</string>
     <string name="selectToDelete">Select to delete</string>
+
+    <!--delete appointment page-->
+    <string name="delAppointmentLabel">DELETE APPOINTMENT</string>
+    <string name="delHelp">Please enter the number of the appointment you wish to delete and press the confirm button.</string>
+    <string name="delHint">No of the appointment</string>
+    <string name="confirm">CONFIRM</string>
 </resources>

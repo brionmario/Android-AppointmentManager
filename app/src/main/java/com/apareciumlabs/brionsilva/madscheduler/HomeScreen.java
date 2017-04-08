@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class HomeScreen extends AppCompatActivity implements View.OnClickListener {
 
@@ -55,13 +56,10 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
 
-                getYear = year ;
-                getMonth = month;
-                getDay = dayOfMonth ;
-
-                //assign the date variable with the clicked date
-                date = getDay + "/" + getMonth + "/" + getYear ;
-               // Toast.makeText(getBaseContext() , year + "/" + month + "/" + dayOfMonth , Toast.LENGTH_SHORT).show();
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                String dateSelected = simpleDateFormat.format(new GregorianCalendar(year, month, dayOfMonth).getTime());
+                date = dateSelected;
+                Toast.makeText(getBaseContext(),dateSelected,Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -131,8 +129,10 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
             selectDeleteBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getBaseContext(),date,Toast.LENGTH_LONG).show();
-                    myDBHandler.deleteAll(date);
+
+                    Intent intent = new Intent(getBaseContext() , DeleteAppointmentScreen.class);
+                    intent.putExtra("Date" , date ); // format - dd/MM/yyyy
+                    startActivity(intent);
                 }
             });
 
