@@ -17,7 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".HomeScreen" />
-        <activity android:name=".CreateAppointmentScreen"></activity>
+        <activity android:name=".CreateAppointmentScreen" />
+        <activity android:name=".DeleteAppointmentScreen"></activity>
     </application>
 
 </manifest>

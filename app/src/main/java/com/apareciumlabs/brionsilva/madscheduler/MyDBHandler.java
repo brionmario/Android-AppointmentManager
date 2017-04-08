@@ -119,14 +119,15 @@ public class MyDBHandler extends SQLiteOpenHelper{
         }
     }
 
+
     /**
-     * Searches and deletes an appointment when the title is passed
+     * Searches and deletes all the appointments on a selected day
      *
-     * @param title Title of the appointment
+     * @param date Date you wish to delete the appointments from
      */
-    public void deleteProduct(String title){
+    public void deleteAll(String date){
         SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("DELETE FROM " + TABLE_APPOINTMENTS + " WHERE " + COLUMN_TITLE + "=\"" + title + "\";");
+        db.execSQL("DELETE FROM " + TABLE_APPOINTMENTS + " WHERE " + COLUMN_DATE + "=\'" + date + "\';");
     }
 
     /**

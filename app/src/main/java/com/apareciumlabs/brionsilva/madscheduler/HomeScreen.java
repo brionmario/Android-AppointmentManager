@@ -27,6 +27,8 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     private String date;
     PopupWindow popupWindow;
 
+    MyDBHandler myDBHandler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +71,8 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         String dateSelected = simpleDateFormat.format(new Date(calendarView.getDate()));
         date = dateSelected;
 
+        //creates an instance of the MyDBHandler
+        myDBHandler = new MyDBHandler(this, null, null, 1);
 
     }
 
@@ -112,11 +116,23 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
             // display the popup in the center
             popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
 
+            //Deletes all the appointments for a given date
             deleteAllBtn = (Button) layout.findViewById(R.id.delAllButton);
             deleteAllBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    popupWindow.dismiss();
+                    Toast.makeText(getBaseContext(),date,Toast.LENGTH_LONG).show();
+                    myDBHandler.deleteAll(date);
+                }
+            });
+
+            //Opens up the list of appointments for the given date
+            selectDeleteBtn = (Button) layout.findViewById(R.id.selDelButton);
+            selectDeleteBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getBaseContext(),date,Toast.LENGTH_LONG).show();
+                    myDBHandler.deleteAll(date);
                 }
             });
 
