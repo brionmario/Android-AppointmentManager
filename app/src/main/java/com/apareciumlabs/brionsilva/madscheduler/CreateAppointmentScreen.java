@@ -41,7 +41,7 @@ public class CreateAppointmentScreen extends AppCompatActivity implements View.O
          * 1 is the database version
          */
         dbHandler = new MyDBHandler(this, null, null, 1);
-        //dbHandler.clearTable("appointments");
+        dbHandler.clearTable("appointments");
         printDatabase();
     }
 
