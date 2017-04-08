@@ -121,6 +121,7 @@ public class ChangeAppointmentScreen extends AppCompatActivity {
                 if(appointmentNumber.equals(null) || appointmentNumber.equals("")){
                     confirmBtn.setError("Please select a valid appointment number");
                     appointmentNumberET.setText("");
+                    return;
                 }else{
                     try{
 
@@ -142,6 +143,9 @@ public class ChangeAppointmentScreen extends AppCompatActivity {
                         appointmentNumberET.setText("");
                         Toast.makeText(getBaseContext(), "There's no appointment numbered " + appointmentNumber +
                                 ". Please try again with a valid number." , Toast.LENGTH_SHORT).show();
+                    }catch (Exception e){
+                        appointmentNumberET.setText("");
+                        Toast.makeText(getBaseContext(), "Invalid input. Please try again with a valid number." , Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -211,16 +215,44 @@ public class ChangeAppointmentScreen extends AppCompatActivity {
             popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
 
             //initialising the update popup button and edit texts
-            titleET = (EditText) findViewById(R.id.updateTitleEditText);
-            timeET = (EditText) findViewById(R.id.updateTimeEditText);
-            detailsET = (EditText) findViewById(R.id.updateDetailsEditText);
+            titleET = (EditText) layout.findViewById(R.id.updateTitleEditText);
+            timeET = (EditText) layout.findViewById(R.id.updateTimeEditText);
+            detailsET = (EditText) layout.findViewById(R.id.updateDetailsEditText);
 
             //Updates the selected appointment
             updateBtn = (Button) layout.findViewById(R.id.updateButton);
             updateBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getBaseContext(),"Updated the appointment" ,Toast.LENGTH_LONG).show();
+
+                    try {
+                        int success = myDBHandler.updateAppointment(listArr.get(Integer.parseInt(appointmentNumber) - 1),
+                                timeET.getText().toString(), titleET.getText().toString(), detailsET.getText().toString());
+
+                        if (success == 1) {
+
+                            Toast.makeText(getBaseContext(), "Successfully updated the appointment", Toast.LENGTH_LONG).show();
+
+                        } else if (success == -1) {
+
+                            Toast.makeText(getBaseContext(), "There's no appointment numbered " + appointmentNumber +
+                                    ". Please try again with a valid number.", Toast.LENGTH_SHORT).show();
+
+                        }
+
+                        //refreshes the page
+                        finish();
+                        startActivity(getIntent());
+
+                    }catch (IndexOutOfBoundsException e){
+
+                        Toast.makeText(getBaseContext(), "Couldn't find the specified appointment in the database." , Toast.LENGTH_SHORT).show();
+
+                    }catch (Exception e){
+
+                        Toast.makeText(getBaseContext(), "Invalid input. Please try again with a valid number." , Toast.LENGTH_SHORT).show();
+                    }
+                    timeET.setText(""); titleET.setText(""); detailsET.setText("");
                     popupWindow.dismiss();
                 }
             });
