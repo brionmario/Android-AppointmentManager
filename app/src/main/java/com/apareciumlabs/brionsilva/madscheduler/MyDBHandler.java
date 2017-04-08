@@ -129,9 +129,23 @@ public class MyDBHandler extends SQLiteOpenHelper{
      *
      * @param date Date you wish to delete the appointments from
      */
-    public void deleteAll(String date){
+    public void deleteAppointments(String date){
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("DELETE FROM " + TABLE_APPOINTMENTS + " WHERE " + COLUMN_DATE + "=\'" + date + "\';");
+        db.close();
+    }
+
+    /**
+     * Searches and deletes a specific appointments on a selected day
+     *
+     * @param date Date of the appointment
+     * @param title Title of the appointment
+     */
+    public void deleteAppointments(String date , String title){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM " + TABLE_APPOINTMENTS + " WHERE " + COLUMN_DATE + "=\'" + date + "\'"
+                + " AND " + COLUMN_TITLE + "=\'" + title + "\';");
+        db.close();
     }
 
     /**
@@ -176,7 +190,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
      * @return
      */
 
-    public List<Appointment> dailyAppointments(String date){
+    public List<Appointment> displayAppointments(String date){
 
         List<Appointment> list = new ArrayList<>();
 

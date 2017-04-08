@@ -59,7 +59,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 String dateSelected = simpleDateFormat.format(new GregorianCalendar(year, month, dayOfMonth).getTime());
                 date = dateSelected;
-                Toast.makeText(getBaseContext(),dateSelected,Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getBaseContext(),dateSelected,Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -106,7 +106,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
             LayoutInflater inflater = (LayoutInflater) HomeScreen.this
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             //initiate the view
-            View layout = inflater.inflate(R.layout.popup,
+            final View layout = inflater.inflate(R.layout.popup,
                     (ViewGroup) findViewById(R.id.popupView));
 
             //initialize a size for the popup
@@ -119,8 +119,9 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
             deleteAllBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getBaseContext(),date,Toast.LENGTH_LONG).show();
-                    myDBHandler.deleteAll(date);
+                    Toast.makeText(getBaseContext(),"Deleted all the appointments on "+ date,Toast.LENGTH_LONG).show();
+                    myDBHandler.deleteAppointments(date);
+                    popupWindow.dismiss();
                 }
             });
 
@@ -133,6 +134,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                     Intent intent = new Intent(getBaseContext() , DeleteAppointmentScreen.class);
                     intent.putExtra("Date" , date ); // format - dd/MM/yyyy
                     startActivity(intent);
+                    popupWindow.dismiss();
                 }
             });
 
