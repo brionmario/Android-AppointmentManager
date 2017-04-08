@@ -23,7 +23,6 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     private Button crtAppoBtn,editAppoBtn,delAppoBtn,moveAppoBtn,searchBtn;
     Button deleteAllBtn , selectDeleteBtn;
     CalendarView calendarView;
-    private int getYear,getMonth,getDay;
 
     private String date;
     PopupWindow popupWindow;
@@ -141,7 +140,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
             });
 
             //Opens up the list of appointments for the given date
-            selectDeleteBtn = (Button) layout.findViewById(R.id.selDelButton);
+            selectDeleteBtn = (Button) layout.findViewById(R.id.selectedDelButton);
             selectDeleteBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

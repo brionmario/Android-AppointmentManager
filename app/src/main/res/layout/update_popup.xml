@@ -31,14 +31,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/updateHeading"/>
+                android:text="@string/updateHeading"
+                android:layout_marginBottom="20dp"/>
 
 
             <LinearLayout
                 android:id="@+id/linearLayout"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="119dp"
+                android:layout_marginBottom="10dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
@@ -46,54 +47,33 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/titleTextView"
-                    android:textAlignment="center" />
 
                 <EditText
-                    android:id="@+id/titleEditText"
-                    android:layout_width="395dp"
+                    android:id="@+id/updateTitleEditText"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="30dp"
                     android:ems="10"
-                    android:hint=""
+                    android:hint="@string/titleTextView"
                     android:inputType="text"/>
 
-
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/timeTextView"
-                    android:textAlignment="center" />
-
                 <EditText
-                    android:id="@+id/timeEditText"
-                    android:layout_width="395dp"
+                    android:id="@+id/updateTimeEditText"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="30dp"
                     android:ems="10"
-                    android:hint=""
+                    android:hint="@string/timeTextView"
                     android:inputType="time"/>
 
 
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/detailsTextView"
-                    android:textAlignment="center" />
-
                 <EditText
-                    android:id="@+id/detailsEditText"
+                    android:id="@+id/updateDetailsEditText"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:layout_marginBottom="30dp"
                     android:ems="10"
-                    android:hint=""
+                    android:hint="@string/detailsTextView"
                     android:inputType="textMultiLine"/>
 
             </LinearLayout>
@@ -105,7 +85,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/selDelButton"
+                    android:id="@+id/updateButton"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

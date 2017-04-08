@@ -48,6 +48,7 @@ public class ChangeAppointmentScreen extends AppCompatActivity {
     //Update popup
     PopupWindow popupWindow;
     Button updateBtn;
+    EditText titleET, timeET, detailsET;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,6 +132,8 @@ public class ChangeAppointmentScreen extends AppCompatActivity {
 
                         } else if (changeType.equals("Edit")){
 
+                            updateAppointmentPopup(v);
+
                         } else if (changeType.equals("Move")){
 
                         }
@@ -199,16 +202,21 @@ public class ChangeAppointmentScreen extends AppCompatActivity {
             LayoutInflater inflater = (LayoutInflater) ChangeAppointmentScreen.this
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             //initiate the view
-            final View layout = inflater.inflate(R.layout.updatePopup,
+            final View layout = inflater.inflate(R.layout.update_popup,
                     (ViewGroup) findViewById(R.id.updatePopupView));
 
             //initialize a size for the popup
-            popupWindow = new PopupWindow(layout, 1200, 900 ,  true);
+            popupWindow = new PopupWindow(layout, 1200, 1650 ,  true);
             // display the popup in the center
             popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
 
+            //initialising the update popup button and edit texts
+            titleET = (EditText) findViewById(R.id.updateTitleEditText);
+            timeET = (EditText) findViewById(R.id.updateTimeEditText);
+            detailsET = (EditText) findViewById(R.id.updateDetailsEditText);
+
             //Updates the selected appointment
-            updateBtn = (Button) layout.findViewById(R.id.delAllButton);
+            updateBtn = (Button) layout.findViewById(R.id.updateButton);
             updateBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
