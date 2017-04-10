@@ -1,14 +1,21 @@
 package com.apareciumlabs.brionsilva.madscheduler;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.apareciumlabs.brionsilva.madscheduler.R;
@@ -37,6 +44,10 @@ public class SearchAppointmentScreen extends AppCompatActivity implements View.O
     //variable to store the value input from the textbox
     String searchKeywords;
 
+    //search popup stuff
+    private PopupWindow popupWindow;
+    TextView titleTV,timeTV,detailsTV;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +66,15 @@ public class SearchAppointmentScreen extends AppCompatActivity implements View.O
 
         //initialize the list view
         listView = (ListView) findViewById(R.id.searchList);
+        //adding a list item click listener
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                displayClickedSearch(appointmentAdaptor.getItem(position) , view);
+
+            }
+        });
 
     }
 
@@ -72,7 +92,9 @@ public class SearchAppointmentScreen extends AppCompatActivity implements View.O
 
                 try {
                     if (searchET.getText().toString().equals("") || searchET.getText().toString().equals(null)) {
+
                         searchET.setError("Please input a Keyword");
+
                     } else {
                         //initialize a new list of apppointments
                         listMatches = new ArrayList<>();
@@ -94,6 +116,12 @@ public class SearchAppointmentScreen extends AppCompatActivity implements View.O
 
                         appointmentAdaptor = new AppointmentAdaptor(getBaseContext(), -1, listMatches);
                         listView.setAdapter(appointmentAdaptor);
+
+                        if(listMatches.size() == 0){
+
+                            Toast.makeText(getBaseContext(),"Couldn't find any matches", Toast.LENGTH_SHORT).show();
+
+                        }
                     }
                 }catch (Exception e){
 
@@ -104,5 +132,41 @@ public class SearchAppointmentScreen extends AppCompatActivity implements View.O
                 break;
             }
         }
+    }
+
+    /**
+     * This function creates a  popup window that will display the selected appointment details
+     *
+     * @param v The current view instance is passed
+     */
+    public void displayClickedSearch(Appointment appointment , View v){
+
+        Toast.makeText(getBaseContext(),appointment.getTitle(), Toast.LENGTH_SHORT).show();
+
+
+                //get an instance of layoutinflater
+                LayoutInflater inflater = (LayoutInflater) SearchAppointmentScreen.this
+                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                //initiate the view
+                final View layout = inflater.inflate(R.layout.search_popup,
+                        (ViewGroup) findViewById(R.id.searchPopupView));
+
+        //initialising the textviews in search popup
+        titleTV = (TextView) layout.findViewById(R.id.searchedTitle) ;
+        timeTV = (TextView) layout.findViewById(R.id.searchedTime) ;
+        detailsTV = (TextView) layout.findViewById(R.id.searchedDetails) ;
+
+                //initialize a size for the popup
+                popupWindow = new PopupWindow(layout, 1200, 900 ,  true);
+                // display the popup in the center
+                popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
+
+                //setting the textviews
+                titleTV.setText(appointment.getTitle());
+                timeTV.setText(appointment.getTime());
+                detailsTV.setText(appointment.getDetails());
+
+
+
     }
 }
