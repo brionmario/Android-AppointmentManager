@@ -19,7 +19,8 @@
         android:shadowRadius="1"
         android:text="@string/createPageTitle"
         android:textSize="24sp"
-        android:layout_marginBottom="30dp"/>
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"/>
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -44,7 +45,7 @@
             android:id="@+id/titleEditText"
             android:layout_width="395dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="20dp"
             android:ems="10"
             android:hint=""
             android:inputType="text"
@@ -63,20 +64,38 @@
             android:id="@+id/timeEditText"
             android:layout_width="395dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="20dp"
             android:ems="10"
             android:hint=""
             android:inputType="time"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="0dp" />
 
-
-        <TextView
-            android:id="@+id/textView4"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/detailsTextView"
-            android:textAlignment="center" />
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/detailsTextView"
+                android:textAlignment="center" />
+
+
+            <Button
+                android:id="@+id/thesaurusButton2"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:background="@color/Red"
+                android:text="@string/thesaurus"
+                android:layout_marginLeft="20dp"/>
+
+        </LinearLayout>
+
+
 
         <EditText
             android:id="@+id/detailsEditText"
@@ -144,20 +163,6 @@
                 android:text="@string/thesaurus" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/thesaurusSub2"
-            android:textAlignment="center" />
-
-        <Button
-            android:id="@+id/thesaurusButton2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@color/customPurple"
-            android:text="@string/thesaurus" />
 
     </LinearLayout>
 

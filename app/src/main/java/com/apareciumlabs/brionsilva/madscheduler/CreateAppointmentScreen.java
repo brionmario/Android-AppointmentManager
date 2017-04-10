@@ -151,6 +151,16 @@ public class CreateAppointmentScreen extends AppCompatActivity implements View.O
                 break;
 
             }
+
+            case R.id.thesaurusButton2 : {
+
+                int startSelection=detailsET.getSelectionStart();
+                int endSelection=detailsET.getSelectionEnd();
+
+                String selectedText = detailsET.getText().toString().substring(startSelection, endSelection);
+                Toast.makeText(getBaseContext(),selectedText,Toast.LENGTH_SHORT).show();
+                break;
+            }
         }
     }
 
