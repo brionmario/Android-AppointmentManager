@@ -2,9 +2,10 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bgColor">
+    android:background="@color/bgColor"
+    tools:context="com.apareciumlabs.brionsilva.madscheduler.SearchAppointmentScreen">
 
     <LinearLayout
         android:layout_width="395dp"
@@ -29,7 +30,7 @@
             android:shadowDx="5"
             android:shadowDy="5"
             android:shadowRadius="1"
-            android:text="@string/changeAppointmentHeading"
+            android:text="@string/searchAppointmentHeading"
             android:textSize="24sp"
             android:textAlignment="center"/>
 
@@ -42,7 +43,7 @@
             android:layout_marginRight="8dp"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
-            android:text="@string/changeAppointmentHelp"
+            android:text="@string/searchAppointmentHelp"
             android:textAlignment="center"/>
 
         <LinearLayout
@@ -52,6 +53,7 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:layout_marginBottom="20dp">
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -61,14 +63,15 @@
                 tools:layout_editor_absoluteY="0dp" >
 
             </LinearLayout>
+
             <EditText
-                android:id="@+id/appointmentNumberEditText"
+                android:id="@+id/searchEditText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="@string/changeAppointmentHint"
-                android:inputType="number"
+                android:hint="@string/searchAppointmentHint"
+                android:inputType="text"
                 android:nextFocusDown="@+id/appointmentNumberEditText"
                 android:nextFocusUp="@+id/appointmentNumberEditText" />
 
@@ -77,13 +80,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/customPurple"
-                android:text="@string/confirm" />
+                android:text="@string/search" />
 
         </LinearLayout>
 
 
         <ListView
-            android:id="@+id/appointmentList"
+            android:id="@+id/searchList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginEnd="8dp"

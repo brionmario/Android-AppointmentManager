@@ -29,6 +29,11 @@
 
     <!--delete appointment page-->
     <string name="changeAppointmentHeading">CHANGE APPOINTMENT HEADING</string>
+    <string name="searchAppointmentHelp">Please enter a keyword and press the "SEARCH" button to search relevant appointments</string>
+    <string name="searchAppointmentHint">Enter a keyword here</string>
+
+    <!--Search appointment page-->
+    <string name="searchAppointmentHeading">SEARCH APPOINTMENT</string>
     <string name="changeAppointmentHelp">Sub Heading</string>
     <string name="changeAppointmentHint">Enter the number here</string>
     <string name="confirm">Button Text</string>

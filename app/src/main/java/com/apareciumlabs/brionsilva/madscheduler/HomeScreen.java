@@ -14,6 +14,8 @@ import android.widget.CalendarView;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
+import com.apareciumlabs.brionsilva.madscheduler.SQLite.MyDBHandler;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -103,6 +105,13 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 intent.putExtra("Change Type" , "Move" );
                 startActivity(intent);
                 break;
+            }
+            case R.id.searchButton :{
+
+                Intent intent = new Intent(getBaseContext() , SearchAppointmentScreen.class);
+                startActivity(intent);
+                break;
+
             }
         }
 

@@ -1,4 +1,4 @@
-package com.apareciumlabs.brionsilva.madscheduler;
+package com.apareciumlabs.brionsilva.madscheduler.SQLite;
 
 /**
  * Copyright (c) 2017. Aparecium Labs.  http://www.apareciumlabs.com
@@ -15,6 +15,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.apareciumlabs.brionsilva.madscheduler.Appointment;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -265,7 +268,6 @@ public class MyDBHandler extends SQLiteOpenHelper{
      *
      * @return
      */
-
     public List<Appointment> displayAppointments(String date){
 
         List<Appointment> list = new ArrayList<>();
@@ -295,6 +297,42 @@ public class MyDBHandler extends SQLiteOpenHelper{
         db.close();
         return list;
     }
+
+    /**
+     * Goes through the database and returns all  the appoints in the database
+     * Note : used in the search function
+     *
+     * @return
+     */
+    public List<Appointment> displayAppointments(){
+
+        List<Appointment> list = new ArrayList<>();
+
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_APPOINTMENTS +";";
+
+        //Cursor exposes results from a query on a SQLiteDatabase
+        Cursor cursor = db.rawQuery(query, null);
+        //move the cursor to the first row of the results
+        cursor.moveToFirst();
+
+        //See if there are anymore results
+        while (!cursor.isAfterLast()) {
+
+            if (cursor.getString(cursor.getColumnIndex("title")) != null) {
+
+                Appointment appointment = new Appointment(cursor.getString(cursor.getColumnIndex("date")) ,
+                        cursor.getString(cursor.getColumnIndex("time")) ,
+                        cursor.getString(cursor.getColumnIndex("title")) ,
+                        cursor.getString(cursor.getColumnIndex("details")) );
+                list.add(appointment);
+            }
+            cursor.moveToNext();
+        }
+        db.close();
+        return list;
+    }
+
     /**
      * Deletes the content in a table when the name of the table is passed
      * @param TABLE_NAME Name of the table

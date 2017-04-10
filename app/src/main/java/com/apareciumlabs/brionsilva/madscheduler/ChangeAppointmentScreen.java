@@ -11,6 +11,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -19,6 +20,8 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.apareciumlabs.brionsilva.madscheduler.SQLite.MyDBHandler;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -127,6 +130,12 @@ public class ChangeAppointmentScreen extends AppCompatActivity {
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Hides the virtual keyboard when the buttons are clicked
+                InputMethodManager inputManager = (InputMethodManager)
+                        getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                        InputMethodManager.HIDE_NOT_ALWAYS);
+
                 appointmentNumber = appointmentNumberET.getText().toString();
                 if(appointmentNumber.equals(null) || appointmentNumber.equals("")){
                     confirmBtn.setError("Please select a valid appointment number");

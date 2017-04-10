@@ -95,4 +95,5 @@
             android:background="@color/customPurple"
             android:text="@string/search" />
     </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>

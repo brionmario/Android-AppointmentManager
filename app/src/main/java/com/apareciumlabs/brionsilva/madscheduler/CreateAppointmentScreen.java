@@ -14,13 +14,14 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
-import com.apareciumlabs.brionsilva.madscheduler.Thesaurus.ThesaurusActivity;
+import com.apareciumlabs.brionsilva.madscheduler.SQLite.MyDBHandler;
 import com.apareciumlabs.brionsilva.madscheduler.Thesaurus.ThesaurusAdapter;
 import com.apareciumlabs.brionsilva.madscheduler.Thesaurus.ThesaurusXMLPullParser;
 
@@ -102,6 +103,12 @@ public class CreateAppointmentScreen extends AppCompatActivity implements View.O
     @Override
     public void onClick(View v) {
 
+        //Hides the virtual keyboard when the buttons are clicked
+        InputMethodManager inputManager = (InputMethodManager)
+                getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                InputMethodManager.HIDE_NOT_ALWAYS);
+
         switch (v.getId()) {
 
             case R.id.saveButton : {
@@ -147,7 +154,15 @@ public class CreateAppointmentScreen extends AppCompatActivity implements View.O
 
             case R.id.thesaurusButton :{
                 inputWord = thesaurusInput.getText().toString();
-                resultPopUp(v);
+
+                if(inputWord.equals(null) || inputWord.equals("")){
+                    thesaurusInput.setError("Please enter a word and press the button");
+                } else{
+                    resultPopUp(v);
+                }
+
+
+                thesaurusInput.setText("");
                 break;
 
             }
@@ -158,7 +173,10 @@ public class CreateAppointmentScreen extends AppCompatActivity implements View.O
                 int endSelection=detailsET.getSelectionEnd();
 
                 String selectedText = detailsET.getText().toString().substring(startSelection, endSelection);
-                Toast.makeText(getBaseContext(),selectedText,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(),"You selected the word \"" + selectedText + "\"",Toast.LENGTH_SHORT).show();
+
+                inputWord = selectedText;
+                resultPopUp(v);
                 break;
             }
         }
