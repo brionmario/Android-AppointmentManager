@@ -18,6 +18,9 @@
     <string name="timeHint">Enter the time</string>
     <string name="detailsHint">Description</string>
 
+    <string name="thesaurus">Thesaurus</string>
+    <string name="thesaurusSub1">Type a word in the text box bellow and press the \"THESAURUS\" button to find out the synonyms related to that word</string>
+    <string name="thesaurusSub2">Highlight a word from the details section and press \"THESAURUS\" button to see the related synonyms</string>
     <!--delete appointment popup-->
     <string name="option">Please select an option from bellow \n\n 1. Delete all appointments for that date \n
     \n 2. Select appointment to delete \n\n </string>
